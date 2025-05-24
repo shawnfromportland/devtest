@@ -1,0 +1,20 @@
+{
+  "name": "devtest",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "git:discard": "git reset --hard HEAD && git clean -fd",
+    "git:commit": "sh -c 'COMMIT_MSG=\"$1\"; git add . && git commit -m \"$COMMIT_MSG\" && echo \"### $COMMIT_MSG\" > scripts/.tmp_changelog_content.md && ts-node scripts/update-technical-changelog.ts --contentFile scripts/.tmp_changelog_content.md' --"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/node": "^22.15.21",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}
