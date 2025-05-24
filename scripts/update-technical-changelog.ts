@@ -4,22 +4,18 @@ import { execSync } from 'child_process';
 
 const TECHNICAL_CHANGELOG_PATH = path.join(__dirname, '..', 'docs', 'ai', 'technical_changelog.md');
 const CHANGELOG_HEADER_SEPARATOR = '---';
-const GITHUB_REPO_URL = 'https://github.com/shawnfromportland/anytime';
 
 interface Args {
   contentFile?: string;
-  performAmend?: boolean;
 }
 
 const parseArgs = (): Args => {
-  const args: Args = { performAmend: false };
+  const args: Args = {};
   const cliArgs = process.argv.slice(2);
   for (let i = 0; i < cliArgs.length; i++) {
     if (cliArgs[i] === '--contentFile' && i + 1 < cliArgs.length) {
       args.contentFile = cliArgs[i + 1];
       i++; 
-    } else if (cliArgs[i] === '--perform-amend') {
-      args.performAmend = true;
     } else {
       console.warn(`Unknown argument: ${cliArgs[i]}`);
     }
@@ -68,6 +64,21 @@ ${CHANGELOG_HEADER_SEPARATOR}
     const headerPart = rawContent.substring(0, separatorIndex + `\n${CHANGELOG_HEADER_SEPARATOR}\n`.length);
     const entriesPart = rawContent.substring(separatorIndex + `\n${CHANGELOG_HEADER_SEPARATOR}\n`.length);
     
+    // Dynamically determine GitHub repo URL
+    let githubRepoUrl = '';
+    try {
+      const remoteUrl = execSync('git remote get-url origin').toString().trim();
+      if (remoteUrl.startsWith('git@')) {
+        // SSH URL: git@github.com:user/repo.git
+        githubRepoUrl = remoteUrl.replace('git@github.com:', 'https://github.com/').replace('.git', '');
+      } else if (remoteUrl.startsWith('https://')) {
+        // HTTPS URL: https://github.com/user/repo.git
+        githubRepoUrl = remoteUrl.replace('.git', '');
+      }
+    } catch (e) {
+      console.warn('Could not determine git remote URL. Links in changelog may be incorrect.', e);
+    }
+
     // Format the title of the new entry as a commit link
     const commitHash = execSync('git rev-parse HEAD').toString().trim();
     const entryLines = newEntryContent.trimEnd().split('\n');
@@ -75,7 +86,7 @@ ${CHANGELOG_HEADER_SEPARATOR}
     if (titleLine && titleLine.startsWith('### ')) {
       const titleText = titleLine.substring(4); // Get text after '### '
       const currentDate = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
-      entryLines[0] = `### (${currentDate}) [${titleText}](${GITHUB_REPO_URL}/commit/${commitHash})`;
+      entryLines[0] = `### (${currentDate}) [${titleText}](${githubRepoUrl}/commit/${commitHash})`;
     }
     const newEntryFormatted = entryLines.join('\n') + '\n';
     // Ensure the new entry still ends with the separator if it was there
@@ -99,7 +110,7 @@ ${CHANGELOG_HEADER_SEPARATOR}
   }
 };
 
-const amendCommit = (): void => {
+const amendCommitAndPush = (): void => {
   try {
     console.log('Staging updated technical changelog...');
     execSync(`git add ${TECHNICAL_CHANGELOG_PATH}`, { stdio: 'inherit' });
@@ -130,9 +141,7 @@ const main = () => {
     // Continue even if deletion fails, as the main operations might have succeeded
   }
 
-  if (args.performAmend) {
-    amendCommit();
-  }
+  amendCommitAndPush();
   console.log('Technical changelog update process completed.');
 };
 
