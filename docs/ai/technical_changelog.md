@@ -7,6 +7,17 @@ Each entry should be linked to the relevant commit for easy reference.
 - Added/updated YAML frontmatter for `agent_changelog_management.mdc`.
 - Added/updated YAML frontmatter for `bootagent.mdc`.
 - Added/updated YAML frontmatter for `git_workflow_rules.mdc`.
+
+### fix: Resolve merge conflicts after pull
+- Resolved merge conflicts in `.cursor/rules/bootagent.mdc` after pulling remote changes.
+
+### chore: Sync local changes and remove bootagent rule
+- Removed `.cursor/rules/@bootagent.mdc`.
+- Includes previous local commits related to rule updates and conflict resolutions.
+### (2025-05-24) docs: Update YAML frontmatter for Cursor rules
+- Added/updated YAML frontmatter for `agent_changelog_management.mdc`.
+- Added/updated YAML frontmatter for `bootagent.mdc`.
+- Added/updated YAML frontmatter for `git_workflow_rules.mdc`.
 ### (2025-05-24) chore: Automated commit and push
 - Committing and pushing changes as per user request.
 ### (2025-05-24) refactor: Remove commit hash linking from technical changelog titles
