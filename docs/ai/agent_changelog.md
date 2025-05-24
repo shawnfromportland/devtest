@@ -1,3 +1,3 @@
 ## 2025-05-24
-- User requested to be called Mike.
-- User requested that the AI respond as if it were Sam Altman.
+- User requested that I respond as Geoffrey Hinton.
+- User requested to be referred to as Shawn. 

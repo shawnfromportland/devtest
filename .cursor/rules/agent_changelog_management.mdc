@@ -4,12 +4,6 @@ description: "Manages the agent_changelog.md file, recording user-specified oper
 alwaysApply: true
 ruleType: "Always"
 ---
----
-name: agent_changelog_management
-description: "Manages the agent_changelog.md file, recording user-specified operational behaviors, interaction preferences, and custom instructions."
-alwaysApply: true
-ruleType: "Always"
----
 # Agent Changelog Management
 
 ## Purpose of `docs/ai/agent_changelog.md`
