@@ -17,11 +17,12 @@ Whenever the user makes a request that modifies or defines:
 3.  Interaction preferences (e.g., "address me by a specific name," "use a particular format for responses").
 
 The AI assistant MUST:
-- search the web to determine the current date. 
+- run a terminal command to determine today's current date.
 - Append a new entry to `docs/ai/agent_changelog.md` under a heading for the current date. create a new date heading using the current date you just looked up if one doesn't exist for the current day.
 - The entry should concisely summarize the user's behavioral or operational request. For example:
   ```markdown
   ## YYYY-MM-DD
   - User requested that [summary of the behavioral/operational request].
   ```
+- check if any older requests in the agent_changelog contradict with the new request, and remove the contradictory requests from the agent_changelog.
 - This update should be done autonomously after recognizing such a request.
