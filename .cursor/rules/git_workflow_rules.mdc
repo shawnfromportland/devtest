@@ -3,6 +3,12 @@ description: "Defines the AI's automated workflow for handling 'git commit' and 
 globs: 
 alwaysApply: false
 ---
+---
+name: git_workflow_rules
+description: "Outlines how the AI assistant should handle requests to commit or discard changes using custom npm scripts."
+alwaysApply: true
+ruleType: "Always"
+---
 # Rule Name: Git Workflow Automation
 
 ## Description:

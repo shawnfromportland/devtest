@@ -3,6 +3,10 @@ This changelog tracks significant technical changes, architectural decisions, an
 Each entry should be linked to the relevant commit for easy reference.
 
 ---
+### (2025-05-24) docs: Update YAML frontmatter for Cursor rules
+- Added/updated YAML frontmatter for `agent_changelog_management.mdc`.
+- Added/updated YAML frontmatter for `bootagent.mdc`.
+- Added/updated YAML frontmatter for `git_workflow_rules.mdc`.
 ### (2025-05-24) chore: Automated commit and push
 - Committing and pushing changes as per user request.
 ### (2025-05-24) refactor: Remove commit hash linking from technical changelog titles
