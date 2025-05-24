@@ -3,6 +3,11 @@ This changelog tracks significant technical changes, architectural decisions, an
 Each entry should be linked to the relevant commit for easy reference.
 
 ---
+### (2025-05-24) refactor: Remove commit hash linking from technical changelog titles
+- Modified `devtest/scripts/update-technical-changelog.ts` in the `updateChangelogFile` function:
+    - Removed logic for fetching GitHub repository URL and commit hash.
+    - Simplified changelog entry titles to `### (YYYY-MM-DD) Commit Title Text`, removing the hyperlink.
+- This change avoids a two-step commit amend process previously considered for accurate hash linking, simplifying the script and preventing multiple commits for a single changelog update.
 ### (2025-05-24) [feat: Implement detailed technical changelog entries](https://github.com/shawnfromportland/devtest/commit/701d72ef59a1a113e0df153040ed8cc84f52c11c)
 - Modified `devtest/package.json` to remove `echo` commands from `git:commit` and `git:commit:push` scripts. These scripts no longer write to `scripts/.tmp_changelog_content.md`.
 - Updated `devtest/.cursor/rules/git_workflow_rules.mdc` to instruct the AI (me) to:

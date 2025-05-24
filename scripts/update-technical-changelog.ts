@@ -67,29 +67,13 @@ ${CHANGELOG_HEADER_SEPARATOR}
     const headerPart = rawContent.substring(0, separatorIndex + `\n${CHANGELOG_HEADER_SEPARATOR}\n`.length);
     const entriesPart = rawContent.substring(separatorIndex + `\n${CHANGELOG_HEADER_SEPARATOR}\n`.length);
     
-    // Dynamically determine GitHub repo URL
-    let githubRepoUrl = '';
-    try {
-      const remoteUrl = execSync('git remote get-url origin').toString().trim();
-      if (remoteUrl.startsWith('git@')) {
-        // SSH URL: git@github.com:user/repo.git
-        githubRepoUrl = remoteUrl.replace('git@github.com:', 'https://github.com/').replace('.git', '');
-      } else if (remoteUrl.startsWith('https://')) {
-        // HTTPS URL: https://github.com/user/repo.git
-        githubRepoUrl = remoteUrl.replace('.git', '');
-      }
-    } catch (e) {
-      console.warn('Could not determine git remote URL. Links in changelog may be incorrect.', e);
-    }
-
-    // Format the title of the new entry as a commit link
-    const commitHash = execSync('git rev-parse HEAD').toString().trim();
+    // Simplified title formatting - no dynamic URL or hash
     const entryLines = newEntryContent.trimEnd().split('\n');
     const titleLine = entryLines[0];
     if (titleLine && titleLine.startsWith('### ')) {
       const titleText = titleLine.substring(4); // Get text after '### '
       const currentDate = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
-      entryLines[0] = `### (${currentDate}) [${titleText}](${githubRepoUrl}/commit/${commitHash})`;
+      entryLines[0] = `### (${currentDate}) ${titleText}`;
     }
     const newEntryFormatted = entryLines.join('\n') + '\n';
     // Ensure the new entry still ends with the separator if it was there
