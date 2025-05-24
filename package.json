@@ -7,7 +7,8 @@
     "build": "tsc",
     "git:discard": "git reset --hard HEAD && git clean -fd",
     "git:commit": "sh -c 'COMMIT_MSG=\"$1\"; git add . && git commit -m \"$COMMIT_MSG\" && echo \"### $COMMIT_MSG\" > scripts/.tmp_changelog_content.md && ts-node scripts/update-technical-changelog.ts --contentFile scripts/.tmp_changelog_content.md' --",
-    "git:commit:push": "sh -c 'COMMIT_MSG=\"$1\"; git add . && git commit -m \"$COMMIT_MSG\" && echo \"### $COMMIT_MSG\" > scripts/.tmp_changelog_content.md && ts-node scripts/update-technical-changelog.ts --contentFile scripts/.tmp_changelog_content.md --perform-amend && git push' --"
+    "git:commit:push": "sh -c 'COMMIT_MSG=\"$1\"; git add . && git commit -m \"$COMMIT_MSG\" && echo \"### $COMMIT_MSG\" > scripts/.tmp_changelog_content.md && ts-node scripts/update-technical-changelog.ts --contentFile scripts/.tmp_changelog_content.md --perform-amend && git push' --",
+    "git:push": "git push"
   },
   "keywords": [],
   "author": "",

@@ -12,7 +12,8 @@ This rule outlines how the AI assistant should handle requests to commit or disc
 
 1.  **Trigger**:
     *   For commit ONLY (local): User asks to "commit," "commit changes," "commit this," "commit the latest," or similar explicit phrasing indicating a desire to save work locally.
-    *   For commit AND PUSH: User asks to "commit and push," "push changes," "save and sync," or similar explicit phrasing indicating a desire to save work and update the remote repository.
+    *   For commit AND PUSH: User asks to "commit and push," "save and sync," or similar explicit phrasing indicating a desire to save work and update the remote repository.
+    *   For PUSH ONLY: User asks to "push," "push changes," "sync remote," or similar explicit phrasing indicating a desire to update the remote repository with already committed changes.
 
 2.  **Clarify Ambiguity (If Necessary)**:
     *   If the user's request to commit (from Trigger) is vague or could be interpreted in multiple ways (e.g., "should we save this?"), the AI MUST first seek clarification: "It sounds like you might want to commit the changes. Is that correct?"
@@ -38,6 +39,15 @@ This rule outlines how the AI assistant should handle requests to commit or disc
         *   (Where `<commit_message>` is the auto-generated one for Path A, or the user-approved/modified one for Path B).
     *   The AI will inform the user of the successful commit and push.
     *   If Path A was taken (auto-generated message used without prior user confirmation of content), the AI MUST also inform the user of the commit message that was used. E.g., "Committed with message: 'feat: ...'" or "Committed and pushed with message: 'feat: ...'".
+
+### Pushing Changes (Without New Commit)
+
+1.  **Trigger**: When the user asks to "push," "push changes," "sync remote," or uses similar explicit phrasing indicating a desire to update the remote repository with already committed local changes (and it's clear no new commit is intended or needed).
+2.  **Action - Execute Push**:
+    *   The AI will directly execute the command: `npm run git:push`
+    *   The AI will inform the user of the successful push.
+3.  **Ambiguity**:
+    *   If the user's request to push is vague (e.g., "update the server?") and it's unclear if a commit is also needed, the AI should clarify, e.g., "Do you want to commit new changes and then push, or just push existing commits?"
 
 ### Discarding Changes (Rollback)
 
