@@ -1,3 +1,6 @@
+### (2025-05-24) feat: Update button color
+- Changed submit button background color to green in `index.html`.
+
 ### (2025-05-24) feat: Make submit button red
 - Added inline style to `index.html` to change submit button background color to red.
 
