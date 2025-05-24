@@ -7,15 +7,18 @@ const CHANGELOG_HEADER_SEPARATOR = '---';
 
 interface Args {
   contentFile?: string;
+  performAmend?: boolean;
 }
 
 const parseArgs = (): Args => {
-  const args: Args = {};
+  const args: Args = { performAmend: false };
   const cliArgs = process.argv.slice(2);
   for (let i = 0; i < cliArgs.length; i++) {
     if (cliArgs[i] === '--contentFile' && i + 1 < cliArgs.length) {
       args.contentFile = cliArgs[i + 1];
       i++; 
+    } else if (cliArgs[i] === '--perform-amend') {
+      args.performAmend = true;
     } else {
       console.warn(`Unknown argument: ${cliArgs[i]}`);
     }
@@ -110,17 +113,15 @@ ${CHANGELOG_HEADER_SEPARATOR}
   }
 };
 
-const amendCommitAndPush = (): void => {
+const amendCommit = (): void => {
   try {
     console.log('Staging updated technical changelog...');
     execSync(`git add ${TECHNICAL_CHANGELOG_PATH}`, { stdio: 'inherit' });
     console.log('Amending commit...');
     execSync('git commit --amend --no-edit', { stdio: 'inherit' });
-    console.log('Force pushing amended commit (with lease)...');
-    execSync('git push --force-with-lease', { stdio: 'inherit' });
-    console.log('Commit amended and pushed successfully.');
+    console.log('Commit amended successfully.');
   } catch (error) {
-    console.error('Failed to amend commit or push:', error);
+    console.error('Failed to amend commit:', error);
     process.exit(1);
   }
 };
@@ -141,7 +142,9 @@ const main = () => {
     // Continue even if deletion fails, as the main operations might have succeeded
   }
 
-  amendCommitAndPush();
+  if (args.performAmend) {
+    amendCommit();
+  }
   console.log('Technical changelog update process completed.');
 };
 
