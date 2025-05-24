@@ -8,15 +8,18 @@ const GITHUB_REPO_URL = 'https://github.com/shawnfromportland/anytime';
 
 interface Args {
   contentFile?: string;
+  performAmend?: boolean;
 }
 
 const parseArgs = (): Args => {
-  const args: Args = {};
+  const args: Args = { performAmend: false };
   const cliArgs = process.argv.slice(2);
   for (let i = 0; i < cliArgs.length; i++) {
     if (cliArgs[i] === '--contentFile' && i + 1 < cliArgs.length) {
       args.contentFile = cliArgs[i + 1];
       i++; 
+    } else if (cliArgs[i] === '--perform-amend') {
+      args.performAmend = true;
     } else {
       console.warn(`Unknown argument: ${cliArgs[i]}`);
     }
@@ -96,7 +99,7 @@ ${CHANGELOG_HEADER_SEPARATOR}
   }
 };
 
-const amendCommitAndPush = (): void => {
+const amendCommit = (): void => {
   try {
     console.log('Staging updated technical changelog...');
     execSync(`git add ${TECHNICAL_CHANGELOG_PATH}`, { stdio: 'inherit' });
@@ -127,7 +130,9 @@ const main = () => {
     // Continue even if deletion fails, as the main operations might have succeeded
   }
 
-  amendCommitAndPush();
+  if (args.performAmend) {
+    amendCommit();
+  }
   console.log('Technical changelog update process completed.');
 };
 
