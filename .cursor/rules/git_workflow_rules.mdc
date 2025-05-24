@@ -1,7 +1,8 @@
 ---
-description: "Defines the AI's automated workflow for handling 'git commit' and 'git discard' requests, including detailed technical changelog generation and script invocation."
-globs: 
+name: git_workflow_rules
+description: "Outlines how the AI assistant should handle requests to git commit or discard or push changes using custom npm scripts."
 alwaysApply: false
+ruleType: "Agent Requested"
 ---
 ---
 name: git_workflow_rules

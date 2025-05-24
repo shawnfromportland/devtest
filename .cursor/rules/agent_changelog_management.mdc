@@ -1,7 +1,8 @@
 ---
-description: "Instructs the AI to autonomously update docs/ai/agent_changelog.md when the user provides new behavioral, operational, or interaction preferences."
-globs: 
+name: agent_changelog_management
+description: "Manages the agent_changelog.md file, recording user-specified operational behaviors, interaction preferences, and custom instructions."
 alwaysApply: true
+ruleType: "Always"
 ---
 ---
 name: agent_changelog_management
